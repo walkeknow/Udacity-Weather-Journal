@@ -25,9 +25,9 @@ function generateEntry(e) {
             }
             postData('/addEntry', entry);
         }
-        
-        // Alert user if promise is rejected due to invalid Zipcode
-        , () => alert("Please enter a valid zip code!"))
+
+            // Alert user if promise is rejected due to invalid Zipcode
+            , () => alert("Please enter a valid zip code!"))
         .then(function () {
             updateUI('/all')
         })
@@ -72,19 +72,13 @@ const updateUI = async (url = '') => {
         const serverData = await response.json();
 
         // Updating UI 
-        const entry = serverData.pop();
-        const holder = document.createElement('div');
-        const date = document.createElement('div');
-        const temp = document.createElement('div');
-        const content = document.createElement('div');
+        const entry = serverData.entryData;
+        const date = document.getElementById('date');
+        const temp = document.getElementById('temp');
+        const content = document.getElementById('content');
         date.innerHTML = `<strong>Date:</strong> ${entry.date}`;
         temp.innerHTML = `<strong>Temperature:</strong> ${entry.temperature}`;
         content.innerHTML = `<strong>Feelings:</strong> ${entry.feelings}`;
-        holder.classList.add('entryHolder');
-        holder.appendChild(date);
-        holder.appendChild(temp);
-        holder.appendChild(content);
-        document.querySelector('.entry').appendChild(holder);
     } catch (error) {
         console.log("error", error);
     }

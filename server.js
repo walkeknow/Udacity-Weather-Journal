@@ -32,27 +32,24 @@ function listening() {
     console.log(`server running on port ${port}`);
 }
 
-const dataArray = []
-
 // Initialize all route with a callback function
 app.get('/all', getAll);
 
 // Callback function to complete GET '/all'
 function getAll(request, response) {
-    response.send(dataArray);
+    response.send(projectData);
 }
 
 // Post Route
 app.post('/addEntry', addEntry);
 
 function addEntry(request, response) {
-    projectData = {
+    const entryData = {
 
         // Converting temperature from the Kelvin to Celsius
         temperature: `${(request.body.temperature - 273.15).toFixed(1).toString()}°C`,
         date: request.body.date,
         feelings: request.body.feelings,
     }
-    dataArray.push(projectData);
-    console.log(projectData);
+    projectData["entryData"] = entryData;
 }
