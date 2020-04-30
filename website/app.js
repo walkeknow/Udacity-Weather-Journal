@@ -3,7 +3,7 @@ const d = new Date();
 const newDate = (d.getMonth() + 1) + '.' + d.getDate() + '.' + d.getFullYear();
 
 // Personal API Key for OpenWeatherMap API
-const apiKey = "66c2354315610ef35e7c8e5f5fe28b4d";
+const apiKey = "&appid=66c2354315610ef35e7c8e5f5fe28b4d";
 let webApi = "http://api.openweathermap.org/data/2.5/weather";
 const tempUnit = "&units=metric";
 
@@ -13,7 +13,7 @@ document.getElementById('generate').addEventListener('click', generateEntry);
 /* Function called by event listener */
 function generateEntry(e) {
     const zipCode = document.getElementById("zip").value;
-    const url = `${webApi}?zip=${zipCode}${tempUnit}&appid=${apiKey}`;
+    const url = `${webApi}?zip=${zipCode}${tempUnit}${apiKey}`;
     console.log(url);
     const feelings = document.getElementById('feelings').value;
 
