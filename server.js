@@ -47,7 +47,7 @@ function addEntry(request, response) {
     const entryData = {
 
         // Converting temperature from the Kelvin to Celsius
-        temperature: `${(request.body.temperature - 273.15).toFixed(1).toString()}°C`,
+        temperature: `${request.body.temperature.toString()}°C`,
         date: request.body.date,
         feelings: request.body.feelings,
     }

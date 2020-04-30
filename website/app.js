@@ -1,10 +1,11 @@
 // Create a new date instance dynamically with JS
 const d = new Date();
-const newDate = d.getMonth() + '.' + d.getDate() + '.' + d.getFullYear();
+const newDate = (d.getMonth() + 1) + '.' + d.getDate() + '.' + d.getFullYear();
 
 // Personal API Key for OpenWeatherMap API
 const apiKey = "66c2354315610ef35e7c8e5f5fe28b4d";
 let webApi = "http://api.openweathermap.org/data/2.5/weather";
+const tempUnit = "&units=metric";
 
 // Event listener to add function to existing HTML DOM element
 document.getElementById('generate').addEventListener('click', generateEntry);
@@ -12,7 +13,8 @@ document.getElementById('generate').addEventListener('click', generateEntry);
 /* Function called by event listener */
 function generateEntry(e) {
     const zipCode = document.getElementById("zip").value;
-    const url = `${webApi}?zip=${zipCode}&appid=${apiKey}`;
+    const url = `${webApi}?zip=${zipCode}${tempUnit}&appid=${apiKey}`;
+    console.log(url);
     const feelings = document.getElementById('feelings').value;
 
     // Calling functions
@@ -27,7 +29,14 @@ function generateEntry(e) {
         }
 
             // Alert user if promise is rejected due to invalid Zipcode
-            , () => alert("Please enter a valid zip code!"))
+            , (error) => {
+                if (error === "feeling") {
+                    alert("Please enter you feelings!");
+                }
+                else {
+                    alert("Please enter a valid zip code!");
+                }
+            })
         .then(function () {
             updateUI('/all')
         })
@@ -39,6 +48,11 @@ const getData = async (url = '') => {
     try {
         const allData = await response.json();
         const temp = allData.main.temp;
+        const feelings = document.getElementById('feelings').value;
+        if (feelings === "") {
+            const message = "feeling"
+            throw message;
+        }
         return temp;
     } catch (error) {
         console.log("error: ", error);
